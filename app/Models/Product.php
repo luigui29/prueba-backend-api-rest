@@ -14,6 +14,6 @@ class Product extends Model
         'price',
         'currency_id',
         'tax_cost',
-        'manufactoring_cost'
+        'manufacturing_cost'
     ];
 }
