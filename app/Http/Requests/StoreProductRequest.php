@@ -23,7 +23,7 @@ class StoreProductRequest extends FormRequest
             'price' => ['required', 'decimal:2', 'numeric', 'min:0'],
             'currency_id' => ['required', 'exists:divisas,id'],
             'tax_cost' => ['nullable', 'decimal:2', 'numeric', 'min:0'],
-            'manufactoring_cost' => ['nullable', 'decimal:2', 'numeric', 'min:0']
+            'manufacturing_cost' => ['nullable', 'decimal:2', 'numeric', 'min:0']
         ];
     }
 
@@ -50,9 +50,9 @@ class StoreProductRequest extends FormRequest
             'tax_cost.numeric' => 'El costo de impuesto debe ser un número válido',
             'tax_cost.min' => 'El costo de impuesto no puede ser menor que 0.',
 
-            'manufactoring_cost.decimal' => 'El costo de fabricación debe tener hasta dos decimales',
-            'manufactoring_cost.numeric' => 'El costo de fabricación debe ser un número válido.',
-            'manufactoring_cost.min' => 'El costo de fabricación no puede ser menor que 0.',
+            'manufacturing_cost.decimal' => 'El costo de fabricación debe tener hasta dos decimales',
+            'manufacturing_cost.numeric' => 'El costo de fabricación debe ser un número válido.',
+            'manufacturing_cost.min' => 'El costo de fabricación no puede ser menor que 0.',
         ];
     }
 }
