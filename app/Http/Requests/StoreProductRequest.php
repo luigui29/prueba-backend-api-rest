@@ -21,7 +21,7 @@ class StoreProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'unique:productos,name'],
             'description' => ['required', 'string', 'max:255'],
             'price' => ['required', 'decimal:2', 'numeric', 'min:0'],
-            'currency_id' => ['required', 'exists:divisas,id'],
+            'currency_id' => ['required', 'integer', 'exists:divisas,id'],
             'tax_cost' => ['required', 'decimal:2', 'numeric', 'min:0'],
             'manufacturing_cost' => ['required', 'decimal:2', 'numeric', 'min:0']
         ];
@@ -45,6 +45,7 @@ class StoreProductRequest extends FormRequest
             'price.min' => 'El precio no puede ser menor que 0.',
 
             'currency_id.required' => 'La divisa es obligatoria.',
+            'currency_id.integer' => 'La divisa especificada debe ser un entero.',
             'currency_id.exists' => 'La divisa especificada no existe.',
 
             'tax_cost.required' => 'El costo de impuesto es obligatorio',
