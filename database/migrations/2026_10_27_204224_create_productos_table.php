@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description');
             $table->decimal('price', places: 2);
             $table->integer('currency_id');
-            $table->decimal('tax_cost', places: 2)->nullable();
-            $table->decimal('manufacturing_cost', places: 2)->nullable();
+            $table->decimal('tax_cost', places: 2);
+            $table->decimal('manufacturing_cost', places: 2);
             $table->timestamps();
 
             // Llaves foráneas

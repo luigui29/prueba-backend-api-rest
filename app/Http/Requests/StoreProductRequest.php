@@ -19,11 +19,11 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255', 'unique:productos,name'],
-            'description' => ['nullable', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
             'price' => ['required', 'decimal:2', 'numeric', 'min:0'],
             'currency_id' => ['required', 'exists:divisas,id'],
-            'tax_cost' => ['nullable', 'decimal:2', 'numeric', 'min:0'],
-            'manufacturing_cost' => ['nullable', 'decimal:2', 'numeric', 'min:0']
+            'tax_cost' => ['required', 'decimal:2', 'numeric', 'min:0'],
+            'manufacturing_cost' => ['required', 'decimal:2', 'numeric', 'min:0']
         ];
     }
 
@@ -35,6 +35,7 @@ class StoreProductRequest extends FormRequest
             'name.max' => 'El nombre es demasiado largo (max: 255 letras)',
             'name.unique' => 'Este producto ya está registrado',
 
+            'description.required' => 'La descripción es obligatoria',
             'description.string' => 'La descripción debe ser texto válido',
             'description.max' => 'La descripción es demasiado larga (max: 255 letras)',
 
@@ -46,10 +47,12 @@ class StoreProductRequest extends FormRequest
             'currency_id.required' => 'La divisa es obligatoria.',
             'currency_id.exists' => 'La divisa especificada no existe.',
 
+            'tax_cost.required' => 'El costo de impuesto es obligatorio',
             'tax_cost.decimal' => 'El costo de impuesto debe tener hasta dos decimales',
             'tax_cost.numeric' => 'El costo de impuesto debe ser un número válido',
             'tax_cost.min' => 'El costo de impuesto no puede ser menor que 0.',
 
+            'manufacturing_cost.required' => 'El costo de fabricación es obligatorio',
             'manufacturing_cost.decimal' => 'El costo de fabricación debe tener hasta dos decimales',
             'manufacturing_cost.numeric' => 'El costo de fabricación debe ser un número válido.',
             'manufacturing_cost.min' => 'El costo de fabricación no puede ser menor que 0.',
