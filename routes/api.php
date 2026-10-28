@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 
 Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::get('/products/{id}/prices', [ProductController::class, 'showPrices']);
+Route::get('/products/{product}', [ProductController::class, 'show'])->whereNumber('product');
+Route::get('/products/{product}/prices', [ProductController::class, 'showPrices'])->whereNumber('product');
 
 Route::post('/products', [ProductController::class, 'store']);
-Route::post('/products/{id}/prices', [ProductController::class, 'storePrices']);
+Route::post('/products/{product}/prices', [ProductController::class, 'storePrices'])->whereNumber('product');
 
-Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::put('/products/{product}', [ProductController::class, 'update'])->whereNumber('product');
 
-Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->whereNumber('product');
