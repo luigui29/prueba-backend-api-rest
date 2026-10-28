@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductPrice;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\StoreProductPriceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,8 +15,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('currency')->get();
+        $products = Product::all();
 
+        // Retornar mensaje si no se encontraron productos
         if ($products->isEmpty()) {
             return response()->json([
                 'message' => 'No se encontraron productos registrados',
@@ -32,6 +35,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->validated());
 
+        // Retornar si la validación falla
         if (!$product) {
             return response()->json([
                 'message' => 'Error al crear el producto',
@@ -49,6 +53,7 @@ class ProductController extends Controller
     {
         $product = Product::with('currency')->find($id);
 
+        // Retornar si el producto no se encuentra en la BD
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado',
@@ -62,10 +67,11 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::find($id);
 
+        // Retornar si el producto no se encuentra en la BD
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado',
@@ -73,24 +79,7 @@ class ProductController extends Controller
             ], 404);
         }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'price' => 'sometimes|numeric|min:0',
-            'currency_id' => 'sometimes|integer|exists:divisas,id',
-            'tax_cost' => 'sometimes|numeric|min:0',
-            'manufacturing_cost' => 'sometimes|numeric|min:0',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error de validación',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
-        }
-
-        $product->update($request->all());
+        $product->update($request->validated());
 
         return response()->json([
             'message' => 'Producto actualizado exitosamente',
@@ -103,6 +92,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        // Retornar si el producto no se encuentra en la BD
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado',
@@ -122,6 +112,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        // Retornar si el producto no se encuentra en la BD
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado',
@@ -140,10 +131,11 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function storePrices(Request $request, $id)
+    public function storePrices(StoreProductPriceRequest $request, $id)
     {
         $product = Product::find($id);
 
+        // Retornar si el producto no se encuentra en la BD
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado',
@@ -151,26 +143,13 @@ class ProductController extends Controller
             ], 404);
         }
 
-        $validator = Validator::make($request->all(), [
-            'currency_id' => 'required|integer|exists:divisas,id',
-            'price' => 'required|numeric|min:0',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error de validación al registrar el precio',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
-        }
-
         $productPrice = ProductPrice::updateOrCreate(
             [
                 'product_id' => $product->id,
-                'currency_id' => $request->currency_id
+                'currency_id' => $request->validated('currency_id')
             ],
             [
-                'price' => $request->price
+                'price' => $request->validated('price')
             ]
         );
 
