@@ -8,6 +8,15 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 
+/** 
+* @OA\Info( 
+*               title="API REST de Productos (Prueba Backend)",
+*               version="1.0"
+*               description="Listado de funcionalidades de la API REST"
+*)
+*
+* @OA\Server(url=L5_SWAGGER_CONSTANT_HOST)
+*/
 class ProductController extends Controller
 {
     public function index()
