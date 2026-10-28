@@ -20,10 +20,10 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'unique:productos,name'],
             'description' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'decimal:2', 'numeric', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
             'currency_id' => ['required', 'integer', 'exists:divisas,id'],
-            'tax_cost' => ['required', 'decimal:2', 'numeric', 'min:0'],
-            'manufacturing_cost' => ['required', 'decimal:2', 'numeric', 'min:0']
+            'tax_cost' => ['required', 'numeric', 'min:0'],
+            'manufacturing_cost' => ['required', 'numeric', 'min:0']
         ];
     }
 
@@ -40,7 +40,6 @@ class StoreProductRequest extends FormRequest
             'description.max' => 'La descripción es demasiado larga (max: 255 letras)',
 
             'price.required' => 'El precio es obligatorio.',
-            'price.decimal' => 'El precio debe tener hasta dos decimales',
             'price.numeric' => 'El precio debe ser un número válido',
             'price.min' => 'El precio no puede ser menor que 0.',
 
@@ -49,12 +48,10 @@ class StoreProductRequest extends FormRequest
             'currency_id.exists' => 'La divisa especificada no existe.',
 
             'tax_cost.required' => 'El costo de impuesto es obligatorio',
-            'tax_cost.decimal' => 'El costo de impuesto debe tener hasta dos decimales',
             'tax_cost.numeric' => 'El costo de impuesto debe ser un número válido',
             'tax_cost.min' => 'El costo de impuesto no puede ser menor que 0.',
 
             'manufacturing_cost.required' => 'El costo de fabricación es obligatorio',
-            'manufacturing_cost.decimal' => 'El costo de fabricación debe tener hasta dos decimales',
             'manufacturing_cost.numeric' => 'El costo de fabricación debe ser un número válido.',
             'manufacturing_cost.min' => 'El costo de fabricación no puede ser menor que 0.',
         ];
