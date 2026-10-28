@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamps();
 
             // Llaves foráneas
-            $table->foreign('product_id')->references('id')->on('productos');
-            $table->foreign('currency_id')->references('id')->on('divisas');
+            $table->foreign('product_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('divisas')->onDelete('cascade');
         });
     }
 
